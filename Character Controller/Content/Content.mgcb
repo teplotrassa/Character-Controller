@@ -1,10 +1,10 @@
 
 #----------------------------- Global Properties ----------------------------#
 
-/outputDir:bin/$(Platform)
-/intermediateDir:obj/$(Platform)
-/platform:DesktopGL
-/config:
+/outputDir:bin\$(Configuration)\Content
+/intermediateDir:obj\$(Configuration)\Content
+/platform:Windows
+/config:DesktopGL
 /profile:Reach
 /compress:False
 
@@ -13,7 +13,7 @@
 
 #---------------------------------- Content ---------------------------------#
 
-#begin Sprite-0004.png
+#begin Player/Idle.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -23,5 +23,17 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Sprite-0004.png;Player.png
+/build:Player/Idle.png
+
+#begin Player/Player.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Player/Player.png
 

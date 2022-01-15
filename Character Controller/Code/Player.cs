@@ -8,10 +8,10 @@ namespace Character_Controller
 {
     class Player
     {
-        private Texture2D playerTexture;
+        private Animated_Sprite sprite;
 
         private Vector2 playerPosition;
-        private Vector2 oldInputVector;
+        private Vector2 oldInputVector = new Vector2(0f, 0f);
 
         private float maxPlayerSpeed = 500f;
         private float playerSpeed = 0f;
@@ -26,7 +26,13 @@ namespace Character_Controller
             this.game = game;
 
             playerPosition = position;
-            oldInputVector = new Vector2(0f, 0f);
+
+            sprite = new Animated_Sprite(
+                new Animation[] 
+                { 
+                    new Animation(0.5, true, 2, 16, 16, 0),
+                    new Animation(0.5, true, 2, 16, 16, 1)
+                });
         }
 
         public void Update(GameTime gameTime, KeyboardState kstate)
@@ -41,6 +47,7 @@ namespace Character_Controller
 
             if (inputVector.X != 0f || inputVector.Y != 0f)
             {
+                sprite.PlayAnimation(1);
                 isMoving = true;
 
                 if (inputVector.X == 2f)
@@ -68,6 +75,7 @@ namespace Character_Controller
             }
             else
             {
+                sprite.PlayAnimation(0);
                 isMoving = false;
                 wasMoving = false;
                 playerSpeed = 0f;
@@ -76,12 +84,12 @@ namespace Character_Controller
 
         public void LoadContent()
         {
-            playerTexture = game.Content.Load<Texture2D>("Player");
+            sprite.LoadContent(game.Content.Load<Texture2D>("Player/Idle"));
         }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
-        {
-            spriteBatch.Draw(playerTexture, playerPosition, null, Color.White, 0f, new Vector2(playerTexture.Width / 2, playerTexture.Height / 2), 1f, SpriteEffects.None, 0f);
+        {         
+            sprite.Draw(gameTime, spriteBatch, playerPosition, SpriteEffects.None);
         }
     }
 }
