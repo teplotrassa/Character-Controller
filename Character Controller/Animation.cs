@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Character_Controller
@@ -29,6 +30,11 @@ namespace Character_Controller
             FrameWidth = frameWidth;
             FrameHeight = frameHeight;
             VerticalOffset = verticalOffset;
+        }
+
+        public Vector2 GetOrigin()
+        {
+            return new Vector2(FrameWidth / 2, FrameHeight);
         }
     }
 }

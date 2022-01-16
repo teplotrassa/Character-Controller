@@ -10,77 +10,64 @@ namespace Character_Controller
 {
     class Animated_Sprite
     {
-        public Texture2D Texture
-        {
-            get { return _texture; }
-        }
         private Texture2D _texture;
 
-        private Animation[] _animations;
+        private Dictionary<string, Animation> _animations;
 
-        private int _animationIndex;
+        private Animation _activeAnimation;
+        private string _activeAnimationName;
 
-        public Animated_Sprite(Animation[] animations)
-        {
-            _animations = animations;
-        }
-
-        public int FrameIndex
-        {
-            get
-            {
-                return _frameIndex;
-            }
-        }
         private int _frameIndex;
 
         private double _time;
+
+
+        public Animated_Sprite(Dictionary<string, Animation> animations)
+        {
+            _animations = animations;
+        }
 
         public void LoadContent(Texture2D texture)
         {
             _texture = texture;
         }
 
-        public Vector2 GetOrigin(int index)
+        public void PlayAnimation(string name)
         {
-            return new Vector2(_animations[index].FrameWidth / 2, _animations[index].FrameHeight);
-        }
-
-        public void PlayAnimation(int index)
-        {
-            if (index == _animationIndex)
+            if (name == _activeAnimationName)
                 return;
 
-            _animationIndex = index;
+            _activeAnimationName = name;
+            _activeAnimation = _animations[name];
             _frameIndex = 0;
             _time = 0.0f;
         }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch, Vector2 position, SpriteEffects spriteEffects)
         {
-            if (_animationIndex == null)
+            if (_activeAnimation == null)
                 return;
 
             _time += gameTime.ElapsedGameTime.TotalSeconds;
-            while(_time > _animations[_animationIndex].FrameTime)
+            while(_time > _activeAnimation.FrameTime)
             {
-                _time -= _animations[_animationIndex].FrameTime;
+                _time -= _activeAnimation.FrameTime;
 
-                if (_animations[_animationIndex].IsLooping)
+                if (_activeAnimation.IsLooping)
                 {
-                    _frameIndex = (_frameIndex + 1) % _animations[_animationIndex].FrameCount;
+                    _frameIndex = (_frameIndex + 1) % _activeAnimation.FrameCount;
                 }
                 else
                 {
-                    _frameIndex = Math.Min(_frameIndex + 1, _animations[_animationIndex].FrameCount - 1);
+                    _frameIndex = Math.Min(_frameIndex + 1, _activeAnimation.FrameCount - 1);
                 }
             }
 
-            int sourceX = (_frameIndex * _animations[_animationIndex].FrameWidth) % (_animations[_animationIndex].FrameCount * _animations[_animationIndex].FrameWidth);
-            int sourceY = _animations[_animationIndex].VerticalOffset * _animations[_animationIndex].FrameHeight;
-            Rectangle source = new Rectangle(sourceX, sourceY, _animations[_animationIndex].FrameWidth, _animations[_animationIndex].FrameHeight);
+            int sourceX = (_frameIndex * _activeAnimation.FrameWidth) % (_activeAnimation.FrameCount * _activeAnimation.FrameWidth);
+            int sourceY = _activeAnimation.VerticalOffset * _activeAnimation.FrameHeight;
+            Rectangle source = new Rectangle(sourceX, sourceY, _activeAnimation.FrameWidth, _activeAnimation.FrameHeight);
 
-            spriteBatch.Draw(Texture, position, source, Color.White, 0.0f, GetOrigin(_animationIndex), 10.0f, spriteEffects, 0.0f);
+            spriteBatch.Draw(_texture, position, source, Color.White, 0.0f, _activeAnimation.GetOrigin(), 10.0f, spriteEffects, 0.0f);
         }
     }
 }

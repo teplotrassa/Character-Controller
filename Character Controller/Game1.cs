@@ -28,7 +28,6 @@ namespace Character_Controller
             _graphics.ApplyChanges();
 
             _player = new Player(
-                this,
                 new Vector2(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight / 2));
 
             base.Initialize();
@@ -39,7 +38,7 @@ namespace Character_Controller
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
-            _player.LoadContent();
+            _player.LoadContent(Content);
         }
 
         protected override void Update(GameTime gameTime)

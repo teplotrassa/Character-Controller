@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
@@ -8,31 +9,22 @@ namespace Character_Controller
 {
     class Player
     {
-        private Animated_Sprite sprite;
+        private Animated_Sprite _sprite;
 
-        private Vector2 playerPosition;
-        private Vector2 oldInputVector = new Vector2(0f, 0f);
+        private Vector2 _playerPosition;
+        private Vector2 _oldInputVector = new Vector2(0f, 0f);
 
-        private float maxPlayerSpeed = 500f;
-        private float playerSpeed = 0f;
+        private float _maxPlayerSpeed = 500f;
+        private float _playerSpeed = 0f;
 
-        private bool isMoving = false;
-        private bool wasMoving = false;
+        private bool _isMoving = false;
+        private bool _wasMoving = false;
 
-        private Game1 game;
-
-        public Player(Game1 game, Vector2 position)
+        public Player(Vector2 position)
         {
-            this.game = game;
+            _playerPosition = position;
 
-            playerPosition = position;
-
-            sprite = new Animated_Sprite(
-                new Animation[] 
-                { 
-                    new Animation(0.5, true, 2, 16, 16, 0),
-                    new Animation(0.5, true, 2, 16, 16, 1)
-                });
+            _sprite = new Animated_Sprite(CreateAnimations());
         }
 
         public void Update(GameTime gameTime, KeyboardState kstate)
@@ -47,49 +39,58 @@ namespace Character_Controller
 
             if (inputVector.X != 0f || inputVector.Y != 0f)
             {
-                sprite.PlayAnimation(1);
-                isMoving = true;
+                _sprite.PlayAnimation("Walking");
+                _isMoving = true;
 
                 if (inputVector.X == 2f)
-                    inputVector.X = oldInputVector.X;
+                    inputVector.X = _oldInputVector.X;
                 if (inputVector.Y == 2f)
-                    inputVector.Y = oldInputVector.Y;
+                    inputVector.Y = _oldInputVector.Y;
 
-                if ((oldInputVector.X != 0f && inputVector.X != oldInputVector.X && inputVector.Y == 0f) ||
-                    (oldInputVector.Y != 0f && inputVector.Y != oldInputVector.Y && inputVector.X == 0f))
-                    playerSpeed = 0;
+                if ((_oldInputVector.X != 0f && inputVector.X != _oldInputVector.X && inputVector.Y == 0f) ||
+                    (_oldInputVector.Y != 0f && inputVector.Y != _oldInputVector.Y && inputVector.X == 0f))
+                    _playerSpeed = 0;
 
-                oldInputVector = inputVector;
+                _oldInputVector = inputVector;
 
                 inputVector.Normalize();
 
-                if ((wasMoving || playerSpeed == 0f) && playerSpeed < maxPlayerSpeed)
+                if ((_wasMoving || _playerSpeed == 0f) && _playerSpeed < _maxPlayerSpeed)
                 {
-                    playerSpeed += 125;
-                    if (playerSpeed > maxPlayerSpeed)
-                        playerSpeed = maxPlayerSpeed;
+                    _playerSpeed += 125;
+                    if (_playerSpeed > _maxPlayerSpeed)
+                        _playerSpeed = _maxPlayerSpeed;
                 }
 
-                playerPosition += inputVector * playerSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                wasMoving = true;
+                _playerPosition += inputVector * _playerSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                _wasMoving = true;
             }
             else
             {
-                sprite.PlayAnimation(0);
-                isMoving = false;
-                wasMoving = false;
-                playerSpeed = 0f;
+                _sprite.PlayAnimation("Idle");
+                _isMoving = false;
+                _wasMoving = false;
+                _playerSpeed = 0f;
             }
         }
 
-        public void LoadContent()
+        public void LoadContent(ContentManager сontent)
         {
-            sprite.LoadContent(game.Content.Load<Texture2D>("Player/Idle"));
+            _sprite.LoadContent(сontent.Load<Texture2D>("Player/Idle"));
         }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {         
-            sprite.Draw(gameTime, spriteBatch, playerPosition, SpriteEffects.None);
+            _sprite.Draw(gameTime, spriteBatch, _playerPosition, SpriteEffects.None);
+        }
+
+        private static Dictionary<string, Animation> CreateAnimations()
+        {
+            return new Dictionary<string, Animation>
+            {
+                ["Idle"] = new Animation(1, true, 2, 16, 16, 0),
+                ["Walking"] = new Animation(1, true, 2, 16, 16, 1) 
+            };
         }
     }
 }
