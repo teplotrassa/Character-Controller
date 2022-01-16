@@ -23,7 +23,6 @@ namespace Character_Controller
         public Player(Vector2 position)
         {
             _playerPosition = position;
-
             _sprite = new Animated_Sprite(CreateAnimations());
         }
 

@@ -21,7 +21,6 @@ namespace Character_Controller
 
         private double _time;
 
-
         public Animated_Sprite(Dictionary<string, Animation> animations)
         {
             _animations = animations;
