@@ -12,7 +12,7 @@ namespace Character_Controller
     {
         private Texture2D _texture;
 
-        private Dictionary<string, Animation> _animations;
+        private readonly Dictionary<string, Animation> _animations;
 
         private Animation _activeAnimation;
         private string _activeAnimationName;
@@ -64,7 +64,7 @@ namespace Character_Controller
 
             int sourceX = (_frameIndex * _activeAnimation.FrameWidth) % (_activeAnimation.FrameCount * _activeAnimation.FrameWidth);
             int sourceY = _activeAnimation.VerticalOffset * _activeAnimation.FrameHeight;
-            Rectangle source = new Rectangle(sourceX, sourceY, _activeAnimation.FrameWidth, _activeAnimation.FrameHeight);
+            Rectangle source = new(sourceX, sourceY, _activeAnimation.FrameWidth, _activeAnimation.FrameHeight);
 
             spriteBatch.Draw(_texture, position, source, Color.White, 0.0f, _activeAnimation.GetOrigin(), 10.0f, spriteEffects, 0.0f);
         }
