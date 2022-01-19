@@ -13,7 +13,7 @@ namespace Character_Controller
 
         private Vector2 _playerPosition;
 
-        private float _maxPlayerSpeed = 500f;
+        private float _maxPlayerSpeed = 450;
         private float _playerSpeed = 0f;
 
         private bool _isMoving = false;
@@ -21,31 +21,20 @@ namespace Character_Controller
         public Player(Vector2 position)
         {
             _playerPosition = position;
-            _sprite = new Animated_Sprite(CreateAnimations());
+            _sprite = new Animated_Sprite(CreatePlayerAnimations());
         }
 
         public void Update(GameTime gameTime, KeyboardState kstate)
         {
-            bool directionChanged = false;
-            var inputVector = InputManager.GetDirectionalInputVector(kstate, ref directionChanged);
+            var inputVector = InputManager.GetDirectionalInputVector(kstate);
 
             if (inputVector.X != 0f || inputVector.Y != 0f)
             {
-                inputVector.Normalize();
                 _sprite.PlayAnimation("Walking");
                 _isMoving = true;
+                _playerSpeed = _maxPlayerSpeed;
 
-                if (directionChanged)
-                {
-                    _playerSpeed = 0;
-                }
-                else if (_playerSpeed < _maxPlayerSpeed)
-                {
-                    _playerSpeed += 125;
-                    if (_playerSpeed > _maxPlayerSpeed)
-                        _playerSpeed = _maxPlayerSpeed;
-                }
-
+                inputVector.Normalize();
                 _playerPosition += inputVector * _playerSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
             else
@@ -66,7 +55,7 @@ namespace Character_Controller
             _sprite.Draw(gameTime, spriteBatch, _playerPosition, SpriteEffects.None);
         }
 
-        private static Dictionary<string, Animation> CreateAnimations()
+        private static Dictionary<string, Animation> CreatePlayerAnimations()
         {
             return new Dictionary<string, Animation>
             {
