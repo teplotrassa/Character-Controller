@@ -14,6 +14,11 @@ namespace Character_Controller
     {
         protected Animated_Sprite _sprite;
 
+        public Vector2 Position
+        {
+            get { return _position; }
+            set { _position = value; }
+        }
         protected Vector2 _position;
 
         protected float _maxSpeed;

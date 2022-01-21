@@ -11,6 +11,7 @@ namespace Character_Controller
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private Player _player;
+        private Camera _camera;
 
         public Game1()
         {
@@ -21,14 +22,15 @@ namespace Character_Controller
 
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
             _graphics.IsFullScreen = false;
             _graphics.PreferredBackBufferWidth = 1600;
             _graphics.PreferredBackBufferHeight = 900;
             _graphics.ApplyChanges();
 
+            _camera = new Camera();
+
             _player = new Player(
-                new Vector2(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight / 2),
+                new Vector2(0, 0),
                 maxSpeed : 450f);
 
             base.Initialize();
@@ -38,7 +40,6 @@ namespace Character_Controller
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
             _player.LoadContent(Content, "Player/Idle");
         }
 
@@ -47,6 +48,7 @@ namespace Character_Controller
             InputManager.UpdateKeyboardState();
 
             _player.Update(gameTime);
+            _camera.Position = _player.Position;
 
             base.Update(gameTime);
         }
@@ -56,7 +58,7 @@ namespace Character_Controller
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-            _spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, null);
+            _spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, _camera.GetTransformation(GraphicsDevice));
             _player.Draw(gameTime, _spriteBatch);
             _spriteBatch.End();
 
