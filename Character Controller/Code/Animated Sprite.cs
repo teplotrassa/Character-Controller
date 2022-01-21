@@ -66,7 +66,7 @@ namespace Character_Controller
             int sourceY = _activeAnimation.VerticalOffset * _activeAnimation.FrameHeight;
             Rectangle source = new(sourceX, sourceY, _activeAnimation.FrameWidth, _activeAnimation.FrameHeight);
 
-            spriteBatch.Draw(_texture, position, source, Color.White, 0.0f, _activeAnimation.GetOrigin(), 10.0f, spriteEffects, 0.0f);
+            spriteBatch.Draw(_texture, position, source, Color.White, 0.0f, _activeAnimation.GetOrigin(), 1.0f, spriteEffects, 0.0f);
         }
     }
 }
