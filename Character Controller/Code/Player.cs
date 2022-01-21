@@ -1,61 +1,53 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System;
-using System.Collections.Generic;
 
 namespace Character_Controller
 {
-    class Player
+    class Player : Character
     {
-        private Animated_Sprite _sprite;
-
-        private Vector2 _playerPosition;
-
-        private float _maxPlayerSpeed = 450;
-        private float _playerSpeed = 0f;
-
         private bool _isMoving = false;
 
-        public Player(Vector2 position)
+        public Player(Vector2 position, float maxSpeed) : base(position, maxSpeed)
         {
-            _playerPosition = position;
-            _sprite = new Animated_Sprite(CreatePlayerAnimations());
+
         }
 
-        public void Update(GameTime gameTime, KeyboardState kstate)
+        public override void Update(GameTime gameTime)
         {
-            var inputVector = InputManager.GetDirectionalInputVector(kstate);
+            Vector2 inputVector = InputManager.GetDirectionalInputVector();
 
             if (inputVector.X != 0f || inputVector.Y != 0f)
             {
                 _sprite.PlayAnimation("Walking");
                 _isMoving = true;
-                _playerSpeed = _maxPlayerSpeed;
+                _speed = _maxSpeed;
 
                 inputVector.Normalize();
-                _playerPosition += inputVector * _playerSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                _position += inputVector * _speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
             else
             {
                 _sprite.PlayAnimation("Idle");
                 _isMoving = false;
-                _playerSpeed = 0f;
+                _speed = 0f;
             }
         }
 
-        public void LoadContent(ContentManager сontent)
+        public override void LoadContent(ContentManager сontent, string spriteName)
         {
-            _sprite.LoadContent(сontent.Load<Texture2D>("Player/Idle"));
+            _sprite.LoadContent(сontent.Load<Texture2D>(spriteName));
         }
 
-        public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {         
-            _sprite.Draw(gameTime, spriteBatch, _playerPosition, SpriteEffects.None);
+            _sprite.Draw(gameTime, spriteBatch, _position, SpriteEffects.None);
         }
 
-        private static Dictionary<string, Animation> CreatePlayerAnimations()
+        protected override Dictionary<string, Animation> CreateAnimations()
         {
             return new Dictionary<string, Animation>
             {

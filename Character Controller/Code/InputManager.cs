@@ -10,14 +10,20 @@ namespace Character_Controller
 {
     static class InputManager
     {
-        private static Vector2 _directionalInputVector; 
+        private static Vector2 _directionalInputVector;
+        private static KeyboardState _keyboardState;
 
-        public static Vector2 GetDirectionalInputVector(KeyboardState keyboardState)
+        public static void UpdateKeyboardState()
+        {
+            _keyboardState = Keyboard.GetState();
+        }
+
+        public static Vector2 GetDirectionalInputVector()
         {
             var newDirectionalInputVector = new Vector2(0f)
             {
-                X = keyboardState.IsKeyDown(Keys.Left) ? (keyboardState.IsKeyDown(Keys.Right) ? _directionalInputVector.X : -1f) : keyboardState.IsKeyDown(Keys.Right) ? 1f : 0f,
-                Y = keyboardState.IsKeyDown(Keys.Up) ? (keyboardState.IsKeyDown(Keys.Down) ? _directionalInputVector.Y : -1f) : keyboardState.IsKeyDown(Keys.Down) ? 1f : 0f
+                X = _keyboardState.IsKeyDown(Keys.Left) ? (_keyboardState.IsKeyDown(Keys.Right) ? _directionalInputVector.X : -1f) : _keyboardState.IsKeyDown(Keys.Right) ? 1f : 0f,
+                Y = _keyboardState.IsKeyDown(Keys.Up) ? (_keyboardState.IsKeyDown(Keys.Down) ? _directionalInputVector.Y : -1f) : _keyboardState.IsKeyDown(Keys.Down) ? 1f : 0f
             };
 
             if (newDirectionalInputVector == Vector2.Zero)

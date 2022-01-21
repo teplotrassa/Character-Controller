@@ -1,8 +1,8 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
-using System;
 
 namespace Character_Controller
 {
@@ -28,7 +28,8 @@ namespace Character_Controller
             _graphics.ApplyChanges();
 
             _player = new Player(
-                new Vector2(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight / 2));
+                new Vector2(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight / 2),
+                maxSpeed : 450f);
 
             base.Initialize();
         }
@@ -38,18 +39,14 @@ namespace Character_Controller
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
-            _player.LoadContent(Content);
+            _player.LoadContent(Content, "Player/Idle");
         }
 
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
+            InputManager.UpdateKeyboardState();
 
-            // TODO: Add your update logic here
-            var kstate = Keyboard.GetState();
-
-            _player.Update(gameTime, kstate);
+            _player.Update(gameTime);
 
             base.Update(gameTime);
         }
