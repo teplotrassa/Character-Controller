@@ -11,12 +11,10 @@ namespace Character_Controller
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+
         private Player _player;
         private Camera _camera;
 
-        private TiledMap _map;
-        private TiledTileset _tileset;
-        private Texture2D _tilesetImage;
         private Location _location;
 
         public Game1()
@@ -54,10 +52,6 @@ namespace Character_Controller
 
             _player.LoadContent(Content);
             _location.LoadContent(Content);
-
-            _map = new TiledMap("Content/Maps/test_map.tmx");
-            _tileset = new TiledTileset("Content/Maps/test_tileset.tsx");
-            _tilesetImage = Content.Load<Texture2D>("Maps/" + _tileset.Image.source.Replace(".png",""));
         }
 
         protected override void Update(GameTime gameTime)

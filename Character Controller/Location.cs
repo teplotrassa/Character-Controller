@@ -12,7 +12,7 @@ namespace Character_Controller
 {
     public class Location
     {
-        private string _name;
+        private readonly string  _name;
 
         private TiledMap _map;
 
