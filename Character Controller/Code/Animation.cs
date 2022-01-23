@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Character_Controller
 {
-    public struct Animation
+    public class Animation
     {
         public string Name { get; set; }
 
@@ -23,6 +23,8 @@ namespace Character_Controller
         public int FrameHeight { get; set; }
 
         public int VerticalOffset { get; set; }
+
+        public Animation() { }
 
         public Animation(string name, float frameTime, bool isLooping, int frameCount, int frameWidth, int frameHeight, int verticalOffset)
         {

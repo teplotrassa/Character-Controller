@@ -13,10 +13,13 @@
 
 #---------------------------------- Content ---------------------------------#
 
-#begin map.tmx
-/copy:map.tmx
+#begin Maps/test_map.tmx
+/copy:Maps/test_map.tmx
 
-#begin map_tileset.png
+#begin Maps/test_tileset.tsx
+/copy:Maps/test_tileset.tsx
+
+#begin Maps/test_tilesetImage.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -26,10 +29,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:map_tileset.png
-
-#begin map_tileset.tsx
-/copy:map_tileset.tsx
+/build:Maps/test_tilesetImage.png
 
 #begin Player/Idle.png
 /importer:TextureImporter

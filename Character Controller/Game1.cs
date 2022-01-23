@@ -17,6 +17,7 @@ namespace Character_Controller
         private TiledMap _map;
         private TiledTileset _tileset;
         private Texture2D _tilesetImage;
+        private Location _location;
 
         public Game1()
         {
@@ -42,6 +43,8 @@ namespace Character_Controller
                 position : new Vector2(0, 0),
                 maxSpeed : 450f);
 
+            _location = new("test", "Maps");
+
             base.Initialize();
         }
 
@@ -50,10 +53,11 @@ namespace Character_Controller
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             _player.LoadContent(Content);
+            _location.LoadContent(Content);
 
-            _map = new TiledMap("Content/Map.tmx");
-            _tileset = new TiledTileset("Content/map_tileset.tsx");
-            _tilesetImage = Content.Load<Texture2D>(_tileset.Image.source.Replace(".png",""));
+            _map = new TiledMap("Content/Maps/test_map.tmx");
+            _tileset = new TiledTileset("Content/Maps/test_tileset.tsx");
+            _tilesetImage = Content.Load<Texture2D>("Maps/" + _tileset.Image.source.Replace(".png",""));
         }
 
         protected override void Update(GameTime gameTime)
@@ -72,25 +76,9 @@ namespace Character_Controller
 
             // TODO: Add your drawing code here
             _spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, _camera.GetTransformation(GraphicsDevice));
+            
+            _location.Draw(gameTime, _spriteBatch);
             _player.Draw(gameTime, _spriteBatch);
-
-            for (int i = 0; i < _map.Layers[0].data.Length; i++)
-            {
-                int gid = _map.Layers[0].data[i];
-
-                if (gid == 0) { continue; }
-                else
-                {
-                    int row = i / _map.Layers[0].width;
-
-                    float x = (i % _map.Layers[0].width) * _map.TileWidth;
-                    float y = row * _map.TileHeight;
-
-                    Rectangle tilesetRect = new(_map.TileWidth * (gid-1), _map.TileHeight * ((gid-1) / (_tileset.TileCount / _tileset.Columns))  , 32, 32);
-
-                    _spriteBatch.Draw(_tilesetImage, new Rectangle((int)x, (int)y, 32, 32), tilesetRect, Color.White);
-                }
-            }
 
             _spriteBatch.End();
 

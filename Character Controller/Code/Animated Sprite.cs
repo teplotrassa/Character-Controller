@@ -35,12 +35,12 @@ namespace Character_Controller
 
         public void PlayAnimation(string name)
         {
-            if (name == _activeAnimation.Name)
-                return;
-
-            _activeAnimation = _animations.FirstOrDefault(anim => anim.Name == name);
-            _frameIndex = 0;
-            _time = 0.0f;
+            if(_activeAnimation == null || name != _activeAnimation.Name)
+            {
+                _activeAnimation = _animations.FirstOrDefault(anim => anim.Name == name);
+                _frameIndex = 0;
+                _time = 0.0f;
+            }
         }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch, Vector2 position, SpriteEffects spriteEffects)
