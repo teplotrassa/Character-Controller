@@ -8,22 +8,25 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Character_Controller
 {
-    class Animation
+    public struct Animation
     {
-        public double FrameTime { get; }
+        public string Name { get; set; }
 
-        public bool IsLooping { get; }
+        public float FrameTime { get; set; }
 
-        public int FrameCount { get; }
+        public bool IsLooping { get; set; }
 
-        public int FrameWidth { get; }
+        public int FrameCount { get; set; }
 
-        public int FrameHeight { get; }
+        public int FrameWidth { get; set; }
 
-        public int VerticalOffset { get; }
+        public int FrameHeight { get; set; }
 
-        public Animation(double frameTime, bool isLooping, int frameCount, int frameWidth, int frameHeight, int verticalOffset)
+        public int VerticalOffset { get; set; }
+
+        public Animation(string name, float frameTime, bool isLooping, int frameCount, int frameWidth, int frameHeight, int verticalOffset)
         {
+            Name = name;
             FrameTime = frameTime;
             IsLooping = isLooping;
             FrameCount = frameCount;

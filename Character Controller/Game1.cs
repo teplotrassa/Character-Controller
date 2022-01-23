@@ -32,11 +32,14 @@ namespace Character_Controller
             _graphics.PreferredBackBufferHeight = 900;
             _graphics.ApplyChanges();
 
-            _camera = new Camera();
-            _camera.Zoom = 3.0f;
+            _camera = new Camera
+            {
+                Zoom = 3.0f
+            };
 
             _player = new Player(
-                new Vector2(0, 0),
+                contentPrefix : "Player/player",
+                position : new Vector2(0, 0),
                 maxSpeed : 450f);
 
             base.Initialize();
@@ -46,7 +49,7 @@ namespace Character_Controller
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            _player.LoadContent(Content, "Player/Idle");
+            _player.LoadContent(Content);
 
             _map = new TiledMap("Content/Map.tmx");
             _tileset = new TiledTileset("Content/map_tileset.tsx");

@@ -9,12 +9,10 @@ namespace Character_Controller
 {
     class Player : Character
     {
-        private bool _isMoving = false;
+        private bool _isMoving;
 
-        public Player(Vector2 position, float maxSpeed) : base(position, maxSpeed)
-        {
-
-        }
+        public Player(string contentPrefix, Vector2 position, float maxSpeed) 
+            : base(contentPrefix, position, maxSpeed) { }
 
         public override void Update(GameTime gameTime)
         {
@@ -24,36 +22,25 @@ namespace Character_Controller
             {
                 _sprite.PlayAnimation("Walking");
                 _isMoving = true;
-                _speed = _maxSpeed;
 
                 inputVector.Normalize();
-                _position += inputVector * _speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                _position += inputVector * _maxSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
             else
             {
                 _sprite.PlayAnimation("Idle");
                 _isMoving = false;
-                _speed = 0f;
             }
         }
 
-        public override void LoadContent(ContentManager сontent, string spriteName)
+        public override void LoadContent(ContentManager сontent)
         {
-            _sprite.LoadContent(сontent.Load<Texture2D>(spriteName));
+            _sprite.LoadContent(сontent, _contentPrefix);
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {         
             _sprite.Draw(gameTime, spriteBatch, _position, SpriteEffects.None);
-        }
-
-        protected override Dictionary<string, Animation> CreateAnimations()
-        {
-            return new Dictionary<string, Animation>
-            {
-                ["Idle"] = new Animation(1, true, 2, 16, 16, 0),
-                ["Walking"] = new Animation(1, true, 2, 16, 16, 1) 
-            };
         }
     }
 }

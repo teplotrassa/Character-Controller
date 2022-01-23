@@ -12,6 +12,8 @@ namespace Character_Controller
 {
     abstract class Character
     {
+        protected string _contentPrefix;
+
         protected Animated_Sprite _sprite;
 
         public Vector2 Position
@@ -22,21 +24,19 @@ namespace Character_Controller
         protected Vector2 _position;
 
         protected float _maxSpeed;
-        protected float _speed;
 
-        public Character(Vector2 position, float maxSpeed)
+        public Character(string contentPrefix, Vector2 position, float maxSpeed)
         {
             _position = position;
             _maxSpeed = maxSpeed;
-            _sprite = new Animated_Sprite(CreateAnimations());
+            _contentPrefix = contentPrefix;
+            _sprite = new Animated_Sprite(_contentPrefix);
         }
 
-        public abstract void LoadContent(ContentManager content, string spriteName);
+        public abstract void LoadContent(ContentManager content);
 
         public abstract void Update(GameTime gameTime);
 
         public abstract void Draw(GameTime gameTime, SpriteBatch spriteBatch);
-
-        protected abstract Dictionary<string, Animation> CreateAnimations();
     }
 }

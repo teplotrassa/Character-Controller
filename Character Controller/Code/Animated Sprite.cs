@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Character_Controller
@@ -12,39 +15,37 @@ namespace Character_Controller
     {
         private Texture2D _texture;
 
-        private readonly Dictionary<string, Animation> _animations;
+        private readonly List<Animation> _animations;
 
         private Animation _activeAnimation;
-        private string _activeAnimationName;
 
         private int _frameIndex;
 
         private double _time;
 
-        public Animated_Sprite(Dictionary<string, Animation> animations)
+        public Animated_Sprite(string contentPrefix)
         {
-            _animations = animations;
+            _animations = GetAnimationsFromXml($"{contentPrefix}_animations.xml");
         }
 
-        public void LoadContent(Texture2D texture)
+        public void LoadContent(ContentManager content, string contentPrefix)
         {
-            _texture = texture;
+            _texture = content.Load<Texture2D>($"{contentPrefix}_tileset");
         }
 
         public void PlayAnimation(string name)
         {
-            if (name == _activeAnimationName)
+            if (name == _activeAnimation.Name)
                 return;
 
-            _activeAnimationName = name;
-            _activeAnimation = _animations[name];
+            _activeAnimation = _animations.FirstOrDefault(anim => anim.Name == name);
             _frameIndex = 0;
             _time = 0.0f;
         }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch, Vector2 position, SpriteEffects spriteEffects)
         {
-            if (_activeAnimation == null)
+            if (_activeAnimation.Name == null)
                 return;
 
             _time += gameTime.ElapsedGameTime.TotalSeconds;
@@ -67,6 +68,16 @@ namespace Character_Controller
             Rectangle source = new(sourceX, sourceY, _activeAnimation.FrameWidth, _activeAnimation.FrameHeight);
 
             spriteBatch.Draw(_texture, position, source, Color.White, 0.0f, _activeAnimation.GetOrigin(), 1.0f, spriteEffects, 0.0f);
+        }
+
+        private static List<Animation> GetAnimationsFromXml(string fileName)
+        {
+            var serializer = new XmlSerializer(typeof(List<Animation>));
+
+            using var stream = File.OpenRead($"Content/{fileName}");
+            var animations = serializer.Deserialize(stream) as List<Animation>;
+
+            return animations;
         }
     }
 }

@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<ArrayOfAnimation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Animation>
+    <Name>Idle</Name>
+    <FrameTime>1</FrameTime>
+    <IsLooping>true</IsLooping>
+    <FrameCount>2</FrameCount>
+    <FrameWidth>16</FrameWidth>
+    <FrameHeight>16</FrameHeight>
+    <VerticalOffset>0</VerticalOffset>
+  </Animation>
+  <Animation>
+    <Name>Walking</Name>
+    <FrameTime>1</FrameTime>
+    <IsLooping>true</IsLooping>
+    <FrameCount>2</FrameCount>
+    <FrameWidth>16</FrameWidth>
+    <FrameHeight>16</FrameHeight>
+    <VerticalOffset>1</VerticalOffset>
+  </Animation>
+</ArrayOfAnimation>
