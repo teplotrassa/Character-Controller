@@ -1,9 +1,5 @@
-﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Content;
-using TiledCS;
 
 namespace Character_Controller
 {
@@ -37,9 +33,9 @@ namespace Character_Controller
             };
 
             _player = new Player(
-                contentPrefix : "Player/player",
-                position : new Vector2(0, 0),
-                maxSpeed : 450f);
+                contentPrefix: "Player/player",
+                position: new Vector2(0, 0),
+                maxSpeed: 250f);
 
             _location = new("test", "Maps");
 
@@ -70,7 +66,7 @@ namespace Character_Controller
 
             // TODO: Add your drawing code here
             _spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, _camera.GetTransformation(GraphicsDevice));
-            
+
             _location.Draw(gameTime, _spriteBatch);
             _player.Draw(gameTime, _spriteBatch);
 

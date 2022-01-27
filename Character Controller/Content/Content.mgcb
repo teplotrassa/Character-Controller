@@ -31,7 +31,10 @@
 /processorParam:TextureFormat=Color
 /build:Maps/test_tilesetImage.png
 
-#begin Player/Idle.png
+#begin Player/player_animations.xml
+/copy:Player/player_animations.xml
+
+#begin Player/player_tileset.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -41,8 +44,5 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Player/Idle.png;Player/player_tileset.png
-
-#begin Player/test.xml
-/copy:Player/test.xml;Player/player_animations.xml
+/build:Player/player_tileset.png
 

@@ -1,18 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using System.Linq;
 using TiledCS;
 
 namespace Character_Controller
 {
     public class Location
     {
-        private readonly string  _name;
+        private readonly string _name;
 
         private TiledMap _map;
 
@@ -49,21 +46,48 @@ namespace Character_Controller
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            for (int i = 0; i < _map.Layers[0].data.Length; i++)
+            string[] layerNames = { "background", "building", "top", "alwaysTop" };
+
+            for (int j = 0; j < _map.Layers.Length; j++)
             {
-                int gid = _map.Layers[0].data[i];
+                string layername = layerNames[j];
+                int layerID = _map.Layers.FirstOrDefault(x => x.name == layername).id - 1;
 
-                if (gid == 0) { continue; }
-                else
+                for (int i = 0; i < _map.Layers[layerID].data.Length; i++)
                 {
-                    int row = i / _map.Layers[0].width;
+                    int gid = _map.Layers[layerID].data[i] - 1;
 
-                    float x = (i % _map.Layers[0].width) * _map.TileWidth;
-                    float y = row * _map.TileHeight;
+                    if (gid >= 0)
+                    {
+                        int mapCol = i % _map.Layers[layerID].height;
+                        int mapRow = i / _map.Layers[layerID].width;
 
-                    Rectangle tilesetRect = new(_map.TileWidth * (gid - 1), _map.TileHeight * ((gid - 1) / (_tilesets[0].TileCount / _tilesets[0].Columns)), 32, 32);
+                        int x = mapCol * _map.TileWidth;
+                        int y = mapRow * _map.TileHeight;
 
-                    spriteBatch.Draw(_tilesetImages[0], new Rectangle((int)x, (int)y, 32, 32), tilesetRect, Color.White);
+                        int tilesetColumn = gid % _tilesets[0].Columns;
+                        int tilesetRow = gid / _tilesets[0].Columns;
+
+                        Rectangle tilesetRect = new(_tilesets[0].TileWidth * tilesetColumn, _tilesets[0].TileHeight * tilesetRow, _tilesets[0].TileWidth, _tilesets[0].TileHeight);
+
+                        SpriteEffects spriteEffects = SpriteEffects.None;
+                        float rotation = 0.0f;
+
+                        if((_map.Layers[layerID].dataRotationFlags[i] & 0b100) != 0)
+                        {
+                            spriteEffects |= SpriteEffects.FlipHorizontally;
+                        }
+                        if ((_map.Layers[layerID].dataRotationFlags[i] & 0b001) != 0)
+                        {
+                            rotation = (float)Math.PI / 2.0f;
+                        }
+                        if ((_map.Layers[layerID].dataRotationFlags[i] & 0b010) != 0)
+                        {
+                            spriteEffects |= SpriteEffects.FlipVertically;
+                        }
+
+                        spriteBatch.Draw(_tilesetImages[0], new Vector2(x, y), tilesetRect, Color.White, rotation, new Vector2(16,16), 1.0f, spriteEffects, 0);
+                    }
                 }
             }
         }
