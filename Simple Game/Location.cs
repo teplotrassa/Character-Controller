@@ -5,7 +5,7 @@ using System;
 using System.Linq;
 using TiledCS;
 
-namespace Character_Controller
+namespace Simple_Game
 {
     public class Location
     {

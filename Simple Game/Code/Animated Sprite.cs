@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Character_Controller
+namespace Simple_Game
 {
     class Animated_Sprite : IDisposable
     {

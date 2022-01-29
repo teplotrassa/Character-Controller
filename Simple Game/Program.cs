@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Character_Controller
+namespace Simple_Game
 {
     public static class Program
     {
