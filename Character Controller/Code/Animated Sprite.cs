@@ -11,7 +11,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Character_Controller
 {
-    class Animated_Sprite
+    class Animated_Sprite : IDisposable
     {
         private Texture2D _texture;
 
@@ -78,6 +78,11 @@ namespace Character_Controller
             var animations = serializer.Deserialize(stream) as List<Animation>;
 
             return animations;
+        }
+
+        public void Dispose()
+        {
+            _texture.Dispose();
         }
     }
 }

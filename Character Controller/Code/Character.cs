@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Character_Controller
 {
-    abstract class Character
+    abstract class Character : IDisposable
     {
         protected string _contentPrefix;
 
@@ -38,5 +38,10 @@ namespace Character_Controller
         public abstract void Update(GameTime gameTime);
 
         public abstract void Draw(GameTime gameTime, SpriteBatch spriteBatch);
+
+        public void Dispose()
+        {
+            _sprite.Dispose();
+        }
     }
 }
