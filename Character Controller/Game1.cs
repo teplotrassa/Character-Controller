@@ -67,8 +67,11 @@ namespace Character_Controller
             // TODO: Add your drawing code here
             _spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, _camera.GetTransformation(GraphicsDevice));
 
-            _location.Draw(gameTime, _spriteBatch);
+            _location.DrawLayer(gameTime, _spriteBatch, "background");
+            _location.DrawLayer(gameTime, _spriteBatch, "building");
             _player.Draw(gameTime, _spriteBatch);
+            _location.DrawLayer(gameTime, _spriteBatch, "top");
+            _location.DrawLayer(gameTime, _spriteBatch, "alwaysTop");
 
             _spriteBatch.End();
 

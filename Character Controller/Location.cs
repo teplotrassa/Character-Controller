@@ -1,7 +1,7 @@
-﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Linq;
 using TiledCS;
 
@@ -73,21 +73,66 @@ namespace Character_Controller
                         SpriteEffects spriteEffects = SpriteEffects.None;
                         float rotation = 0.0f;
 
-                        if((_map.Layers[layerID].dataRotationFlags[i] & 0b100) != 0)
+                        if ((_map.Layers[layerID].dataRotationFlags[i] & 0b100) != 0)
                         {
                             spriteEffects |= SpriteEffects.FlipHorizontally;
                         }
                         if ((_map.Layers[layerID].dataRotationFlags[i] & 0b001) != 0)
                         {
-                            rotation = (float)Math.PI / 2.0f;
+                            rotation = MathHelper.PiOver2;
                         }
                         if ((_map.Layers[layerID].dataRotationFlags[i] & 0b010) != 0)
                         {
                             spriteEffects |= SpriteEffects.FlipVertically;
                         }
 
-                        spriteBatch.Draw(_tilesetImages[0], new Vector2(x, y), tilesetRect, Color.White, rotation, new Vector2(16,16), 1.0f, spriteEffects, 0);
+                        spriteBatch.Draw(_tilesetImages[0], new Vector2(x, y), tilesetRect, Color.White, rotation, new Vector2(16, 16), 1.0f, spriteEffects, 0);
                     }
+                }
+            }
+        }
+
+        public void DrawLayer(GameTime gameTime, SpriteBatch spriteBatch, string layername)
+        {
+            if (_map == null) return;
+            if (_map.Layers.FirstOrDefault(x => x.name == layername) == null) return;
+
+            int layerID = _map.Layers.FirstOrDefault(x => x.name == layername).id - 1;
+
+            for (int i = 0; i < _map.Layers[layerID].data.Length; i++)
+            {
+                int gid = _map.Layers[layerID].data[i] - 1;
+
+                if (gid >= 0)
+                {
+                    int mapCol = i % _map.Layers[layerID].height;
+                    int mapRow = i / _map.Layers[layerID].width;
+
+                    int x = mapCol * _map.TileWidth;
+                    int y = mapRow * _map.TileHeight;
+
+                    int tilesetColumn = gid % _tilesets[0].Columns;
+                    int tilesetRow = gid / _tilesets[0].Columns;
+
+                    Rectangle tilesetRect = new(_tilesets[0].TileWidth * tilesetColumn, _tilesets[0].TileHeight * tilesetRow, _tilesets[0].TileWidth, _tilesets[0].TileHeight);
+
+                    SpriteEffects spriteEffects = SpriteEffects.None;
+                    float rotation = 0.0f;
+
+                    if ((_map.Layers[layerID].dataRotationFlags[i] & 0b100) != 0)
+                    {
+                        spriteEffects |= SpriteEffects.FlipHorizontally;
+                    }
+                    if ((_map.Layers[layerID].dataRotationFlags[i] & 0b001) != 0)
+                    {
+                        rotation = MathHelper.PiOver2;
+                    }
+                    if ((_map.Layers[layerID].dataRotationFlags[i] & 0b010) != 0)
+                    {
+                        spriteEffects |= SpriteEffects.FlipVertically;
+                    }
+
+                    spriteBatch.Draw(_tilesetImages[0], new Vector2(x, y), tilesetRect, Color.White, rotation, new Vector2(16, 16), 1.0f, spriteEffects, 0);
                 }
             }
         }
