@@ -37,7 +37,7 @@ namespace Simple_Game
         {
             if(_activeAnimation == null || name != _activeAnimation.Name)
             {
-                _activeAnimation = _animations.FirstOrDefault(anim => anim.Name == name);
+                _activeAnimation = _animations.Find(x => x.Name == name);
                 _frameIndex = 0;
                 _time = 0.0f;
             }
@@ -45,7 +45,7 @@ namespace Simple_Game
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch, Vector2 position, SpriteEffects spriteEffects)
         {
-            if (_activeAnimation.Name == null)
+            if (_activeAnimation == null)
                 return;
 
             _time += gameTime.ElapsedGameTime.TotalSeconds;
@@ -63,9 +63,14 @@ namespace Simple_Game
                 }
             }
 
-            int sourceX = (_frameIndex * _activeAnimation.FrameWidth) % (_activeAnimation.FrameCount * _activeAnimation.FrameWidth);
-            int sourceY = _activeAnimation.VerticalOffset * _activeAnimation.FrameHeight;
+            int sourceX = _activeAnimation.HorizontalOffset + ((_frameIndex * _activeAnimation.FrameWidth) % (_activeAnimation.FrameCount * _activeAnimation.FrameWidth));
+            int sourceY = _activeAnimation.VerticalOffset;
             Rectangle source = new(sourceX, sourceY, _activeAnimation.FrameWidth, _activeAnimation.FrameHeight);
+
+            if (_activeAnimation.IsFlippedHorizontally)
+                spriteEffects |= SpriteEffects.FlipHorizontally;
+            if (_activeAnimation.IsFlippedVertically)
+                spriteEffects |= SpriteEffects.FlipVertically;
 
             spriteBatch.Draw(_texture, position, source, Color.White, 0.0f, _activeAnimation.GetOrigin(), 1.0f, spriteEffects, 0.0f);
         }
