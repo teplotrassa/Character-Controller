@@ -16,26 +16,21 @@ namespace Simple_Game
 
         public bool IsLooping { get; set; }
 
+        public bool IsFlippedHorizontally { get; set; }
+
+        public bool IsFlippedVertically { get; set; }
+
         public int FrameCount { get; set; }
 
         public int FrameWidth { get; set; }
 
         public int FrameHeight { get; set; }
 
+        public int HorizontalOffset { get; set; }
+
         public int VerticalOffset { get; set; }
 
         public Animation() { }
-
-        public Animation(string name, float frameTime, bool isLooping, int frameCount, int frameWidth, int frameHeight, int verticalOffset)
-        {
-            Name = name;
-            FrameTime = frameTime;
-            IsLooping = isLooping;
-            FrameCount = frameCount;
-            FrameWidth = frameWidth;
-            FrameHeight = frameHeight;
-            VerticalOffset = verticalOffset;
-        }
 
         public Vector2 GetOrigin()
         {

@@ -1,21 +1,99 @@
 <?xml version="1.0"?>
 <ArrayOfAnimation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Animation>
-    <Name>Idle</Name>
+    <Name>Idle_Right</Name>
     <FrameTime>1</FrameTime>
     <IsLooping>true</IsLooping>
-    <FrameCount>2</FrameCount>
+	<IsFlippedHorizontally>false</IsFlippedHorizontally>
+	<IsFlippedVertically>false</IsFlippedVertically>
+    <FrameCount>1</FrameCount>
     <FrameWidth>32</FrameWidth>
     <FrameHeight>64</FrameHeight>
-    <VerticalOffset>0</VerticalOffset>
+	<HorizontalOffset>0</HorizontalOffset>
+    <VerticalOffset>64</VerticalOffset>
   </Animation>
   <Animation>
-    <Name>Walking</Name>
+    <Name>Idle_Left</Name>
     <FrameTime>1</FrameTime>
     <IsLooping>true</IsLooping>
+	<IsFlippedHorizontally>true</IsFlippedHorizontally>
+	<IsFlippedVertically>false</IsFlippedVertically>
+    <FrameCount>1</FrameCount>
+    <FrameWidth>32</FrameWidth>
+    <FrameHeight>64</FrameHeight>
+	<HorizontalOffset>0</HorizontalOffset>
+    <VerticalOffset>64</VerticalOffset>
+  </Animation>
+  <Animation>
+    <Name>Idle_Up</Name>
+    <FrameTime>1</FrameTime>
+    <IsLooping>true</IsLooping>
+	<IsFlippedHorizontally>false</IsFlippedHorizontally>
+	<IsFlippedVertically>false</IsFlippedVertically>
+    <FrameCount>1</FrameCount>
+    <FrameWidth>32</FrameWidth>
+    <FrameHeight>64</FrameHeight>
+	<HorizontalOffset>0</HorizontalOffset>
+    <VerticalOffset>128</VerticalOffset>
+  </Animation>
+  <Animation>
+    <Name>Idle_Down</Name>
+    <FrameTime>1</FrameTime>
+    <IsLooping>true</IsLooping>
+	<IsFlippedHorizontally>false</IsFlippedHorizontally>
+	<IsFlippedVertically>true</IsFlippedVertically>
+    <FrameCount>1</FrameCount>
+    <FrameWidth>32</FrameWidth>
+    <FrameHeight>64</FrameHeight>
+	<HorizontalOffset>0</HorizontalOffset>
+    <VerticalOffset>128</VerticalOffset>
+  </Animation>
+  <Animation>
+    <Name>Walking_Right</Name>
+    <FrameTime>1</FrameTime>
+    <IsLooping>true</IsLooping>
+	<IsFlippedHorizontally>false</IsFlippedHorizontally>
+	<IsFlippedVertically>false</IsFlippedVertically>
     <FrameCount>2</FrameCount>
     <FrameWidth>32</FrameWidth>
     <FrameHeight>64</FrameHeight>
-    <VerticalOffset>1</VerticalOffset>
+	<HorizontalOffset>0</HorizontalOffset>
+    <VerticalOffset>64</VerticalOffset>
+  </Animation>
+  <Animation>
+    <Name>Walking_Left</Name>
+    <FrameTime>1</FrameTime>
+    <IsLooping>true</IsLooping>
+	<IsFlippedHorizontally>true</IsFlippedHorizontally>
+	<IsFlippedVertically>false</IsFlippedVertically>
+    <FrameCount>2</FrameCount>
+    <FrameWidth>32</FrameWidth>
+    <FrameHeight>64</FrameHeight>
+	<HorizontalOffset>0</HorizontalOffset>
+    <VerticalOffset>64</VerticalOffset>
+  </Animation>
+  <Animation>
+    <Name>Walking_Up</Name>
+    <FrameTime>1</FrameTime>
+    <IsLooping>true</IsLooping>
+	<IsFlippedHorizontally>false</IsFlippedHorizontally>
+	<IsFlippedVertically>false</IsFlippedVertically>
+    <FrameCount>2</FrameCount>
+    <FrameWidth>32</FrameWidth>
+    <FrameHeight>64</FrameHeight>
+	<HorizontalOffset>0</HorizontalOffset>
+    <VerticalOffset>128</VerticalOffset>
+  </Animation>
+  <Animation>
+    <Name>Walking_Down</Name>
+    <FrameTime>1</FrameTime>
+    <IsLooping>true</IsLooping>
+	<IsFlippedHorizontally>false</IsFlippedHorizontally>
+	<IsFlippedVertically>true</IsFlippedVertically>
+    <FrameCount>2</FrameCount>
+    <FrameWidth>32</FrameWidth>
+    <FrameHeight>64</FrameHeight>
+	<HorizontalOffset>0</HorizontalOffset>
+    <VerticalOffset>128</VerticalOffset>
   </Animation>
 </ArrayOfAnimation>
