@@ -18,19 +18,38 @@ namespace Simple_Game
         {
             Vector2 inputVector = InputManager.GetDirectionalInputVector();
 
-            if (inputVector.X != 0f || inputVector.Y != 0f)
+            if (inputVector.X != 0f || inputVector.Y != 0f) //-V3024
             {
-                _sprite.PlayAnimation("Walking");
                 _isMoving = true;
+                UpdateDirection(inputVector);
 
                 inputVector.Normalize();
                 _position += inputVector * _maxSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
             else
             {
-                _sprite.PlayAnimation("Idle");
                 _isMoving = false;
             }
+
+            UpdateAnimations();
+        }
+
+        private void UpdateAnimations()
+        {
+            if (_isMoving)
+                _sprite.PlayAnimation("Walking_" + _facingDirection.ToString());
+            else
+                _sprite.PlayAnimation("Idle_" + _facingDirection.ToString());
+        }
+
+        private void UpdateDirection(Vector2 inputVector)
+        {
+            if (inputVector.X != 0f) //-V3024
+                _facingDirection = inputVector.X == 1f ? FacingDirection.Right : FacingDirection.Left; //-V3024
+            else if (inputVector.Y != 0f) //-V3024
+                _facingDirection = inputVector.Y == 1f ? FacingDirection.Down : FacingDirection.Up; //-V3024
+            else
+                _facingDirection = FacingDirection.Right;
         }
 
         public override void LoadContent(ContentManager сontent)

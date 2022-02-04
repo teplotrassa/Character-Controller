@@ -12,6 +12,14 @@ namespace Simple_Game
 {
     abstract class Character : IDisposable
     {
+        protected enum FacingDirection
+        {
+            Up,
+            Down,
+            Left,
+            Right
+        }
+
         protected string _contentPrefix;
 
         protected Animated_Sprite _sprite;
@@ -23,6 +31,8 @@ namespace Simple_Game
         }
         protected Vector2 _position;
 
+        protected FacingDirection _facingDirection;
+
         protected float _maxSpeed;
 
         public Character(string contentPrefix, Vector2 position, float maxSpeed)
@@ -31,6 +41,7 @@ namespace Simple_Game
             _maxSpeed = maxSpeed;
             _contentPrefix = contentPrefix;
             _sprite = new Animated_Sprite(_contentPrefix);
+            _facingDirection = FacingDirection.Right;
         }
 
         public abstract void LoadContent(ContentManager content);
