@@ -111,9 +111,9 @@ namespace Simple_Game
                 int startingGid = _map.Tilesets[i].firstgid;
                 int tilesetLength = _tilesets[i].TileCount;
 
-                for (int j = startingGid; j < tilesetLength; j++)
+                for (int j = 0; j < tilesetLength; j++)
                 {
-                    _tilesetIndexByGid.Add(j, i);
+                    _tilesetIndexByGid.Add(startingGid + j, i);
                 }
             }
         }
