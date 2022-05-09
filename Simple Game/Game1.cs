@@ -12,6 +12,10 @@ namespace Simple_Game
         private Player _player;
         private Camera _camera;
 
+        public Location Location
+        {
+            get { return _location; }
+        }
         private Location _location;
 
         public Game1()
@@ -30,15 +34,18 @@ namespace Simple_Game
 
             _camera = new Camera
             {
-                Zoom = 3.0f
+                Zoom = 2.0f
             };
 
             _player = new Player(
+                gameRef: this,
                 contentPrefix: "Player/player",
                 position: new Vector2(0, 0),
                 maxSpeed: 250f);
 
-            _location = new("test", "Maps");
+            _location = new(
+                name: "test", 
+                contentPrefix: "Maps");
 
             base.Initialize();
         }
@@ -56,7 +63,8 @@ namespace Simple_Game
             InputManager.UpdateKeyboardState();
 
             _player.Update(gameTime);
-            _camera.Position = _player.Position;
+            _camera.Position = new Vector2((int)_player.Position.X, (int)_player.Position.Y);
+            Console.WriteLine(_camera.Position);
 
             base.Update(gameTime);
         }

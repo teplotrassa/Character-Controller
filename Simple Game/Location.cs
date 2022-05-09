@@ -18,15 +18,31 @@ namespace Simple_Game
 
         private Dictionary<int, int> _tilesetIndexByGid;
 
+        private List<Rectangle> _collisionData;
+
         private Texture2D[] _tilesetImages;
+
+        public int TileWidth 
+        { 
+            get { return _map.TileWidth; }
+        }
+
+        public int TileHeight 
+        {
+            get { return _map.TileHeight; } 
+        }
 
         public Location(string name, string contentPrefix)
         {
             _name = name;
             _map = new TiledMap($"Content/{contentPrefix}/{name}_map.tmx");
+
             _tilesetIndexByGid = new Dictionary<int, int>();
+            _collisionData = new List<Rectangle>();
+
             GetTilesets(contentPrefix);
             CreateTilesetIndexByGidTable();
+            CreateCollisionData("building");
         }
 
         private void GetTilesets(string contentPrefix)
@@ -37,6 +53,52 @@ namespace Simple_Game
             {
                 _tilesets[i] = new TiledTileset($"Content/{contentPrefix}/{_map.Tilesets[i].source}");
             }
+        }
+
+        private int GetTilesetIndexByGid(int gid)
+        {
+            return _tilesetIndexByGid[gid];
+        }
+
+        private void CreateTilesetIndexByGidTable()
+        {
+            for (int i = 0; i < _map.Tilesets.Length; i++)
+            {
+                int startingGid = _map.Tilesets[i].firstgid;
+                int tilesetLength = _tilesets[i].TileCount;
+
+                for (int j = 0; j < tilesetLength; j++)
+                {
+                    _tilesetIndexByGid.Add(startingGid + j, i);
+                }
+            }
+        }
+
+        private void CreateCollisionData(string collisionLayerName)
+        {
+            TiledLayer collisionLayer = Array.Find(_map.Layers, x => x.name == collisionLayerName);
+
+            if (collisionLayer == null)
+                return;
+
+            for (int i = 0; i < collisionLayer.data.Length; i++)
+            {
+                if(collisionLayer.data[i] > 0)
+                {
+                    int mapCol = i % collisionLayer.height;
+                    int mapRow = i / collisionLayer.width;
+
+                    int x = mapCol * _map.TileWidth;
+                    int y = mapRow * _map.TileHeight;
+
+                    _collisionData.Add(new Rectangle(x, y, _map.TileWidth, _map.TileHeight));
+                }
+            }
+        }
+
+        public List<Rectangle> GetCollisionData()
+        {
+            return _collisionData;
         }
 
         public void LoadContent(ContentManager content)
@@ -87,33 +149,15 @@ namespace Simple_Game
                     }
                     if ((currentLayer.dataRotationFlags[i] & 0b001) != 0)
                     {
-                        rotation = MathHelper.PiOver2;
+                        //TODO: Rotate befgre flipping
+                        //rotation = MathHelper.PiOver2;
                     }
                     if ((currentLayer.dataRotationFlags[i] & 0b010) != 0)
                     {
                         spriteEffects |= SpriteEffects.FlipVertically;
                     }
 
-                    spriteBatch.Draw(_tilesetImages[tilesetIndex], new Vector2(x, y), tilesetRect, Color.White, rotation, new Vector2(16, 16), 1.0f, spriteEffects, 0);
-                }
-            }
-        }
-
-        private int GetTilesetIndexByGid(int gid)
-        {
-            return _tilesetIndexByGid[gid];
-        }
-
-        private void CreateTilesetIndexByGidTable()
-        {
-            for (int i = 0; i < _map.Tilesets.Length; i++)
-            {
-                int startingGid = _map.Tilesets[i].firstgid;
-                int tilesetLength = _tilesets[i].TileCount;
-
-                for (int j = 0; j < tilesetLength; j++)
-                {
-                    _tilesetIndexByGid.Add(startingGid + j, i);
+                    spriteBatch.Draw(_tilesetImages[tilesetIndex], new Vector2(x, y), tilesetRect, Color.White, rotation, Vector2.Zero, 1.0f, spriteEffects, 0);
                 }
             }
         }

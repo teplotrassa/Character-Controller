@@ -72,7 +72,7 @@ namespace Simple_Game
             if (_activeAnimation.IsFlippedVertically)
                 spriteEffects |= SpriteEffects.FlipVertically;
 
-            spriteBatch.Draw(_texture, position, source, Color.White, 0.0f, _activeAnimation.GetOrigin(), 1.0f, spriteEffects, 0.0f);
+            spriteBatch.Draw(_texture, new Vector2((int)position.X, (int)position.Y), source, Color.White, 0.0f, _activeAnimation.GetOrigin(), 1.0f, spriteEffects, 0.0f);
         }
 
         private static List<Animation> GetAnimationsFromXml(string fileName)

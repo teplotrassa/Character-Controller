@@ -33,5 +33,10 @@ namespace Simple_Game
 
             return _directionalInputVector;
         }
+
+        public static bool IsKeyDown(Keys key)
+        {
+            return _keyboardState.IsKeyDown(key);
+        }
     }
 }
